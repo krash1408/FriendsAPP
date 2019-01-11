@@ -1,24 +1,19 @@
-let wrapper = document.createElement('div');
-wrapper.classList.add('wrapper');
-wrapper.style.width = '300px';
-wrapper.style.height = '500px';
-wrapper.style.border = '1px solid black';
-document.querySelector('main').appendChild(wrapper);
+const $ = x => document.querySelector(x);
+const $$ = x => document.querySelectorAll(x);
 
-let URL = "https://randomuser.me/api/?results=30";
-let DATA = [];
+const API = "https://randomuser.me/api/?results=30";
+let userPool = [];
+fetch(API)
+  .then(function ifError(response) {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw Error(response.statusText);
+    }
+  })
+  .then(function (data) {
+    userPool = data.results;
+  })
 
 
-function handleErrors(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
-}
-
-fetch(URL)
-  .then(handleErrors)
-  .then(response => response.json())
-  .then(data => {
-    DATA = data.results;
-  });
+$('.card__photo').setAttribute('src',`url:${userPool[1].picture.large}`); 
