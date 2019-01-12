@@ -1,5 +1,12 @@
-const url = 'https://randomuser.me/api/?results=30&inc=gender,name,email,dob,phone,picture';
-let userPool = [];
+const url = 'https://randomuser.me/api/?results=30&inc=gender,name,email,registered,dob,phone,id,picture';
+let field = document.querySelector('.main-field');
+
+let fieldWrapper = document.createElement('div');
+fieldWrapper.classList.add('main-field__wrapper');
+fieldWrapper.innerHTML = '';
+
+let usersArr = [];
+
 
 function returnObject() {
   fetch(url)
@@ -12,25 +19,47 @@ function returnObject() {
       }
     })
     .then(function (data) {
-      userPool = data.results;
+      data.results.forEach(element => {
+        let user = new User(element);
+        user.createCard();
+        usersArr.push(user);
+        user.appendCard(usersArr);
+      });
     })
     .catch(error => console.error(error));
 }
-returnObject();
 
-function friendsApp () {
-  
+
+const User = function(info) {
+  this.info = info;
 }
 
-card = document.createElement('div')
-cardWrapper = document.createElement('div');
-cardPhoto = document.createElement('img');
-cardInfo = document.createElement('div');
-card.classList.add('card');
-cardWrapper.classList.add('card__wrapper');
-cardPhoto.classList.add('card__photo');
-cardInfo.classList.add('card__info');
-card.appendChild(cardWrapper);
-cardWrapper.appendChild(cardPhoto);
-cardWrapper.appendChild(cardInfo);
-// cardPhoto.setAttribute('src',`url('${userPool[0].picture.large}')`);
+User.prototype.createCard = function (  ) {
+  card = document.createElement('div');
+  card.classList.add('card');
+
+  cardWrapper = document.createElement('div');
+  cardWrapper.classList.add('card__wrapper');
+
+  cardPhoto = document.createElement('img');
+  cardPhoto.classList.add('card__photo');
+  cardPhoto.setAttribute('src', `${this.info.picture.large}`);
+
+  cardName = document.createElement('div');
+  cardName.classList.add('card__name');
+  cardName.innerHTML = `${this.info.name.first} ${this.info.name.last}`;
+
+  card.appendChild(cardWrapper);
+  cardWrapper.appendChild(cardPhoto)
+  cardWrapper.appendChild(cardName);
+
+  this.element = card;
+}
+User.prototype.appendCard = function ( arr ) {
+  arr.forEach(value => {
+    fieldWrapper.appendChild(value.element);
+  })
+  field.appendChild(fieldWrapper);
+}
+
+returnObject();
