@@ -1,4 +1,4 @@
-const url = 'https://randomuser.me/api/?results=30&inc=gender,name,email,registered,dob,phone,id,picture';
+const url = 'https://randomuser.me/api/?results=28&inc=gender,name,email,registered,dob,phone,id,picture';
 let field = document.querySelector('.main-field');
 
 let fieldWrapper = document.createElement('div');
@@ -61,5 +61,30 @@ User.prototype.appendCard = function ( arr ) {
   })
   field.appendChild(fieldWrapper);
 }
+User.prototype.ModalCreate = function (  ) {
+  modalCard = document.createElement('div');
+  modalCard.classList.add('modal-card');
+  modalCard.classList.add('modal-card--hidden');
 
+  modalCardPhoto = document.createElement('img');
+  modalCardPhoto.classList.add('modal-card__photo');
+  cardPhoto.setAttribute('src', `${this.info.picture.large}`);
+
+  modalCardName = document.createElement('p');
+  modalCardName.classList.add('modal-card__name');
+  cardName.innerHTML = `${this.info.name.first} ${this.info.name.last}`;
+
+
+
+}
 returnObject();
+
+
+document.querySelector('.main-navigation__list').addEventListener('click', () => {
+  if (event.target.classList.contains('main-navigation__item')) {
+    console.log('click');
+  } else return;
+});
+document.querySelector('main').addEventListener('click', () => {
+
+})
