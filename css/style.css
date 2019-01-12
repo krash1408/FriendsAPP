@@ -14,6 +14,7 @@ body {
 }
 /* навигация */
 .main-navigation {
+    position: relative;
     display: flex;
     position: fixed;
     top: 0;
@@ -51,7 +52,7 @@ body {
     margin: 0;
 }
 .main-navigation__item {
-    width: 25%;
+    flex: 1 0 14rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -78,6 +79,9 @@ body {
     justify-content: flex-start;
     align-items: flex-start;
     margin: 5.2rem auto;
+}
+.main-menu {
+    display: none;
 }
 /* карточки */
 .card {
@@ -150,6 +154,83 @@ body {
 }
 
 
+@media (max-width: 950px) {
+    .main-menu {
+        position: absolute;
+        right: 0;
+        width: 5rem;
+        height: 5rem;
+        z-index: 3;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        border: 0;
+        background-color: rgba(255, 255, 255, 0.562);
+
+        cursor: pointer;
+        outline: none;
+    }
+    .main-menu:hover {
+        background-color: rgba(255, 255, 255, 0.856); 
+    }
+    .main-menu::before {
+        content: '';
+        display: block;
+        position: absolute;
+        right: .5rem;
+        top: 1.5rem;
+        z-index: 4;
+        width: 4rem;
+        height: .3rem;
+        background-color: rgba(65, 166, 255, 0.856); 
+    }
+    .main-menu::after {
+        content: '';
+        display: block;
+        position: absolute;
+        right: .5rem;
+        top: 3.5rem;
+        z-index: 4;
+        width: 4rem;
+        height: .3rem;
+        background-color: rgba(65, 166, 255, 0.856); 
+    }
+    .main-navigation__list {
+        flex-flow: column;
+        background-color:  rgba(65, 166, 255, 0.856);
+        position: relative;
+    }
+    .main-navigation__item {
+        position: absolute;
+        right: 0;
+        flex: 0 0 5rem;
+        width: 20rem;
+        will-change: transform;
+        transition: transform .5s;
+        transform: translateX(110%);
+    }
+    .main-navigation__item:nth-child(1) {
+        top: 5rem;
+    }
+    .main-navigation__item:nth-child(2) {
+        top: 10rem;
+    }
+    .main-navigation__item:nth-child(3) {
+        top: 15rem;
+    }
+    .main-navigation__item:nth-child(4) {
+        top: 20rem;
+    }
+    .main-navigation__item:nth-child(5) {
+        top: 25rem;
+    }
+    .main-navigation__item--visible {
+        transform: translateX(0);
+    }
+
+}
 
 
 

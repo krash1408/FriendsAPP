@@ -80,11 +80,21 @@ User.prototype.ModalCreate = function (  ) {
 returnObject();
 
 
-document.querySelector('.main-navigation__list').addEventListener('click', () => {
-  if (event.target.classList.contains('main-navigation__item')) {
-    console.log('click');
-  } else return;
-});
-document.querySelector('main').addEventListener('click', () => {
+// document.querySelector('.main-navigation__list').addEventListener('click', () => {
+//   if (event.target.classList.contains('main-navigation__item')) {
+//     console.log('click');
+//   } else return;
+// });
+document.querySelector('.main-menu').addEventListener('click', () => {
+  console.log('111');
+  document.querySelectorAll('.main-navigation__item').forEach(val => {
+    val.classList.toggle('main-navigation__item--visible');
+  })
+})
 
+document.querySelectorAll('.main-navigation__item')[0].addEventListener('click', (arr) => {
+  console.log('lul');
+  arr.sort(function (a, b) {
+    return a - b;
+  })
 })
