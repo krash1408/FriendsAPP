@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Friends APP</title>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&amp;subset=cyrillic" rel="stylesheet">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -12,14 +13,18 @@
   <main class="main">
     <nav class="main-navigation">
       <div class="main-logo">FriendsAPP</div>
-      <button class="main-menu"></button>
-      <ul class="main-navigation__list">
-        <li class="main-navigation__item">А - Я</li>
-        <li class="main-navigation__item">Я - А</li>
-        <li class="main-navigation__item">Возраст: 1 - 9</li>
-        <li class="main-navigation__item">Возраст: 9 - 1</li>
-        <li class="main-navigation__item">Поиск</li>
-      </ul>
+      
+      <input type="radio" class="hidden" id="name-az" name="name">
+        <label for="name-az" class="sort name-az"></label>
+      <input type="radio" class="hidden" id="name-za" name="name">
+        <label for="name-za" class="sort name-za"></label>
+      <input type="radio" class="hidden" id="age-az" name="age">
+        <label for="age-az" class="sort age-za"></label>
+      <input type="radio" class="hidden" id="age-za" name="age">
+        <label for="age-za" class="sort age-az"></label>
+    <input id="search" type="text" placeholder="Поиск:">
+    <input id="reset" type="reset">
+      
     </nav>
 
   <section class="main-field">
