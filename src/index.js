@@ -1,14 +1,12 @@
-const url = 'https://randomuser.me/api/?results=28&inc=gender,name,email,registered,dob,phone,id,picture';
-let field = document.querySelector('.main-field');
-
-let fieldWrapper = document.createElement('div');
+const url = 'https://randomuser.me/api/?results=30&inc=gender,name,email,registered,dob,phone,id,picture&nas=us';
+const field = document.querySelector('.main-field');
+const fieldWrapper = document.createElement('div');
 fieldWrapper.classList.add('main-field__wrapper');
 fieldWrapper.innerHTML = '';
+let usersCurrentArr = [];
+let usersSortedArr = [];
 
-let usersArr = [];
-
-
-function returnObject() {
+function getUsersList() {
   fetch(url)
     .then(function ifError(response) {
       if (response.ok) {
@@ -20,81 +18,102 @@ function returnObject() {
     })
     .then(function (data) {
       data.results.forEach(element => {
-        let user = new User(element);
-        user.createCard();
-        usersArr.push(user);
-        user.appendCard(usersArr);
-      });
+        createCard(element);
+        usersCurrentArr.push(element);
+        usersSortedArr.push(element);
+      })
+    })
+    .then(function () {
+      createFiled( usersCurrentArr );
     })
     .catch(error => console.error(error));
 }
-
-
-const User = function(info) {
-  this.info = info;
-}
-
-User.prototype.createCard = function (  ) {
+//добавляет в массив к каждому обьекту ключ element со значением DOM елемента card
+function createCard ( value ) {
   card = document.createElement('div');
   card.classList.add('card');
-
-  cardWrapper = document.createElement('div');
-  cardWrapper.classList.add('card__wrapper');
-
   cardPhoto = document.createElement('img');
   cardPhoto.classList.add('card__photo');
-  cardPhoto.setAttribute('src', `${this.info.picture.large}`);
-
-  cardName = document.createElement('div');
+  cardPhoto.setAttribute('src', `${value.picture.large}`);
+  cardName = document.createElement('p');
   cardName.classList.add('card__name');
-  cardName.innerHTML = `${this.info.name.first} ${this.info.name.last}`;
-
-  card.appendChild(cardWrapper);
-  cardWrapper.appendChild(cardPhoto)
-  cardWrapper.appendChild(cardName);
-
-  this.element = card;
+  cardName.innerHTML = `Name: ${value.name.first} ${value.name.second}`;
+  cardAge = document.createElement('p');
+  cardAge.classList.add('card__age');
+  cardAge.innerHTML = `Age: ${value.dob.age}`
+  card.appendChild(cardPhoto);
+  card.appendChild(cardName);
+  card.appendChild(cardAge);
+  value.element = card;
 }
-User.prototype.appendCard = function ( arr ) {
-  arr.forEach(value => {
-    fieldWrapper.appendChild(value.element);
-  })
+function createFiled ( array ) {
+  array.forEach(value => fieldWrapper.appendChild(value.element))
   field.appendChild(fieldWrapper);
 }
-User.prototype.ModalCreate = function (  ) {
-  modalCard = document.createElement('div');
-  modalCard.classList.add('modal-card');
-  modalCard.classList.add('modal-card--hidden');
+// сортировщики
+let sortByAge = function( a, b ) {
+    if ( a.dob.age < b.dob.age ) return -1;
+    if ( a.dob.age > b.dob.age) return 1;
+    return 0;
+}
+const sortByName = function ( a, b ) {
+  let nameA = a.name.first.toLowerCase(), 
+      nameB = b.name.first.toLowerCase()
+  if (nameA < nameB) return -1
+  if (nameA > nameB) return 1
+  return 0
+}
+// поиск по имени
+function search(  ) {
+  let names = document.getElementsByClassName('card__name');
+  const search = document.querySelector('#search');
+  const filter = search.value.toUpperCase();
 
-  modalCardPhoto = document.createElement('img');
-  modalCardPhoto.classList.add('modal-card__photo');
-  cardPhoto.setAttribute('src', `${this.info.picture.large}`);
-
-  modalCardName = document.createElement('p');
-  modalCardName.classList.add('modal-card__name');
-  cardName.innerHTML = `${this.info.name.first} ${this.info.name.last}`;
-
-
+  for (i = 0; i < names.length; i++) {
+    txtValue = names[i].textContent || names[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      document.querySelectorAll('.card')[i].style.display = "";
+    } else {
+      document.querySelectorAll('.card')[i].style.display = "none";
+    }
+  }
 
 }
-returnObject();
-
-
-// document.querySelector('.main-navigation__list').addEventListener('click', () => {
-//   if (event.target.classList.contains('main-navigation__item')) {
-//     console.log('click');
-//   } else return;
-// });
-document.querySelector('.main-menu').addEventListener('click', () => {
-  console.log('111');
-  document.querySelectorAll('.main-navigation__item').forEach(val => {
-    val.classList.toggle('main-navigation__item--visible');
-  })
+//сортировка по имени и возрасту
+document.querySelector('.main-navigation').addEventListener('click', () => {
+  const inputNodeList = document.querySelectorAll('.hidden'); 
+  const nameAZ = document.querySelector('.name-az');
+  const nameZA = document.querySelector('.name-za');
+  const ageAZ = document.querySelector('.age-az');
+  const ageZA = document.querySelector('.age-za');
+  const reset = document.querySelector('#reset');
+  switch (event.target) {
+    case nameAZ :
+      usersCurrentArr.sort(sortByName);
+      createFiled( usersCurrentArr );
+      break;
+    case nameZA :
+    usersCurrentArr.sort(sortByName).reverse();
+      createFiled( usersCurrentArr );
+      break;
+    case ageZA :
+      usersCurrentArr.sort(sortByAge);
+      createFiled( usersCurrentArr );
+      break;
+    case ageAZ :
+      usersCurrentArr.sort(sortByAge).reverse();
+      createFiled( usersCurrentArr );
+      break;
+    case reset :
+      inputNodeList.forEach(val => val.checked = false);
+      document.getElementById('search').value = '';
+      document.querySelectorAll('.card').forEach( val => val.style.display = "")
+      field.removeChild(fieldWrapper);
+      createFiled( usersSortedArr );
+      break;
+  }
 })
-
-document.querySelectorAll('.main-navigation__item')[0].addEventListener('click', (arr) => {
-  console.log('lul');
-  arr.sort(function (a, b) {
-    return a - b;
-  })
+document.querySelector('#search').addEventListener('input', () => {
+  search( usersCurrentArr );
 })
+getUsersList();
