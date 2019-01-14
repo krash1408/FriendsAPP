@@ -1,4 +1,4 @@
-const url = 'https://randomuser.me/api/?results=3&inc=gender,name,email,registered,dob,phone,id,picture&nas=us';
+const url = 'https://randomuser.me/api/?results=50&inc=gender,name,email,registered,dob,phone,id,picture&nas=us';
 const field = document.querySelector('.main-field');
 const fieldWrapper = document.createElement('div');
 fieldWrapper.classList.add('main-field__wrapper');
@@ -97,6 +97,20 @@ const sortByName = function ( a, b ) {
   if (nameA > nameB) return 1
   return 0
 }
+const sortByGenderMale = function  ( array ) {
+  let card = document.querySelectorAll('.card');
+  array.forEach((value, i) => {
+    if ( value.gender !== 'male') {card[i].style.display = 'none'}
+    else {card[i].style.display = ''}
+  })
+}
+const sortByGenderFemale = function  ( array ) {
+  let card = document.querySelectorAll('.card');
+  array.forEach((value, i) => {
+    if ( value.gender !== 'female') {card[i].style.display = 'none'}
+    else {card[i].style.display = ''}
+  })
+}
 
 // поиск по имени
 function search(  ) {
@@ -117,6 +131,8 @@ function search(  ) {
 //сортировка по имени и возрасту
 document.querySelector('.main-navigation').addEventListener('click', () => {
   const inputNodeList = document.querySelectorAll('.hidden'); 
+  const male = document.querySelector('.male');
+  const female = document.querySelector('.female');
   const nameAZ = document.querySelector('.name-az');
   const nameZA = document.querySelector('.name-za');
   const ageAZ = document.querySelector('.age-az');
@@ -140,6 +156,12 @@ document.querySelector('.main-navigation').addEventListener('click', () => {
       usersCurrentArr.sort(sortByAge).reverse();
       createFiled( usersCurrentArr );
       break;
+    case male :
+      sortByGenderMale( usersCurrentArr );
+      break;
+    case female :
+        sortByGenderFemale( usersCurrentArr );
+        break;
     case reset :
       inputNodeList.forEach(val => val.checked = false);
       document.getElementById('search').value = '';

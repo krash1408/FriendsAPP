@@ -62,9 +62,12 @@ body {
 /* поле сортировки */
 .sort {
     width: 5rem;
+    min-width: 5rem;
     height: 5rem;
+    min-height: 5rem;
     cursor: pointer;
     background-repeat: no-repeat;
+    background-position: center center;
 }
 .sort:hover,
 .sort:focus {
@@ -72,6 +75,12 @@ body {
 }
 .hidden:checked + .sort {
     filter: drop-shadow(0 0 .4rem #0000ff);
+}
+.male {
+    background-image: url('../img/mars-solid.svg');
+}
+.female {
+    background-image: url('../img/venus-solid.svg');
 }
 .name-az {
     background-image: url('../img/sort-alpha-down-solid.svg');
