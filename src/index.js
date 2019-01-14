@@ -1,4 +1,4 @@
-const url = 'https://randomuser.me/api/?results=30&inc=gender,name,email,registered,dob,phone,id,picture&nas=us';
+const url = 'https://randomuser.me/api/?results=3&inc=gender,name,email,registered,dob,phone,id,picture&nas=us';
 const field = document.querySelector('.main-field');
 const fieldWrapper = document.createElement('div');
 fieldWrapper.classList.add('main-field__wrapper');
@@ -32,20 +32,54 @@ function getUsersList() {
 function createCard ( value ) {
   card = document.createElement('div');
   card.classList.add('card');
+  cardWrapper = document.createElement('div');
+  cardWrapper.classList.add('card__wrapper');
+
+  cardFront = document.createElement('div');
+  cardFront.classList.add('card__front');
+  cardBack = document.createElement('div');
+  cardBack.classList.add('card__back');
+
   cardPhoto = document.createElement('img');
   cardPhoto.classList.add('card__photo');
   cardPhoto.setAttribute('src', `${value.picture.large}`);
   cardName = document.createElement('p');
   cardName.classList.add('card__name');
-  cardName.innerHTML = `Name: ${value.name.first} ${value.name.second}`;
+  cardName.innerHTML = `Name: ${value.name.first} ${value.name.last}`;
   cardAge = document.createElement('p');
   cardAge.classList.add('card__age');
-  cardAge.innerHTML = `Age: ${value.dob.age}`
-  card.appendChild(cardPhoto);
-  card.appendChild(cardName);
-  card.appendChild(cardAge);
+  cardAge.innerHTML = `Age: ${value.dob.age}`;
+
+  cardBirthDay = document.createElement('p');
+  cardBirthDay.classList.add('card__birthday');
+  cardBirthDay.innerHTML = `Date of birth:<br>${value.dob.date}`;
+  cardEmail = document.createElement('p');
+  cardEmail.classList.add('card__email');
+  cardEmail.innerHTML = `Email:<br>${value.email}`;
+  cardID = document.createElement('p');
+  cardID.classList.add('card__id');
+  cardID.innerHTML = `Accaunt ID:<br>${value.id.value}`;
+  cardPhone = document.createElement('p');
+  cardPhone.classList.add('card__phont');
+  cardPhone.innerHTML = `Phone number:<br>${value.phone}`;
+
+  card.appendChild(cardWrapper);
+
+  cardWrapper.appendChild(cardFront);
+  cardWrapper.appendChild(cardBack);
+
+  cardFront.appendChild(cardPhoto);
+  cardFront.appendChild(cardName);
+  cardFront.appendChild(cardAge);
+
+  cardBack.appendChild(cardBirthDay);
+  cardBack.appendChild(cardEmail);
+  cardBack.appendChild(cardID);
+  cardBack.appendChild(cardPhone);
+
   value.element = card;
 }
+
 function createFiled ( array ) {
   array.forEach(value => fieldWrapper.appendChild(value.element))
   field.appendChild(fieldWrapper);
@@ -63,6 +97,7 @@ const sortByName = function ( a, b ) {
   if (nameA > nameB) return 1
   return 0
 }
+
 // поиск по имени
 function search(  ) {
   let names = document.getElementsByClassName('card__name');
@@ -87,6 +122,7 @@ document.querySelector('.main-navigation').addEventListener('click', () => {
   const ageAZ = document.querySelector('.age-az');
   const ageZA = document.querySelector('.age-za');
   const reset = document.querySelector('#reset');
+
   switch (event.target) {
     case nameAZ :
       usersCurrentArr.sort(sortByName);
@@ -116,4 +152,13 @@ document.querySelector('.main-navigation').addEventListener('click', () => {
 document.querySelector('#search').addEventListener('input', () => {
   search( usersCurrentArr );
 })
+
+document.querySelectorAll('.card__front').forEach( val => {
+  val.addEventListener('click', () => {
+    console.log(target);
+    console.log(click)
+    val.classList.toggle('rotate');
+  })
+}) 
+
 getUsersList();
