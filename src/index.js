@@ -5,8 +5,15 @@ fieldWrapper.classList.add('main-field__wrapper');
 fieldWrapper.innerHTML = '';
 let usersCurrentArr = [];
 let usersSortedArr = [];
+const restoreSortedArray = function () {
+  usersSortedArr = [];
+  usersCurrentArr.forEach( val => {
+    usersSortedArr.push(val);
+  })
+  
+}
 
-(function request() {
+const request = function() {
   fetch(url)
     .then(function ifError(response) {
       if (response.ok) {
@@ -27,7 +34,7 @@ let usersSortedArr = [];
       createFiled( usersSortedArr );
     })
     .catch(error => error);
-})()
+}
 
 class createCard {
   constructor(value) {
@@ -150,31 +157,36 @@ document.querySelector('.main-navigation').addEventListener('click', () => {
     case nameAZ :
       usersSortedArr.sort(sortByName);
       createFiled( usersSortedArr );
+      restoreSortedArray();
       break;
     case nameZA :
     usersSortedArr.sort(sortByName).reverse();
       createFiled( usersSortedArr );
+      restoreSortedArray();
       break;
     case ageZA :
       usersSortedArr.sort(sortByAge);
       createFiled( usersSortedArr );
+      restoreSortedArray();
       break;
     case ageAZ :
       usersSortedArr.sort(sortByAge).reverse();
       createFiled( usersSortedArr );
+      restoreSortedArray();
       break;
     case male :
       sortByGenderMale( usersSortedArr );
       break;
     case female :
-        sortByGenderFemale( usersSortedArr );
-        break;
+      sortByGenderFemale( usersSortedArr );
+      break;
     case reset :
       inputNodeList.forEach(val => val.checked = false);
       document.getElementById('search').value = '';
       document.querySelectorAll('.card').forEach( val => val.style.display = "")
       field.removeChild(fieldWrapper);
       createFiled( usersCurrentArr );
+      restoreSortedArray();
       break;
   }
 })
@@ -182,15 +194,4 @@ document.querySelector('#search').addEventListener('input', () => {
   search( usersCurrentArr );
 })
 
-// function cardsRotate() {
-//   document.querySelectorAll('.card__wrapper').forEach((val, i) => {
-//     val.addEventListener('click', () => {
-//       if (event.target) {
-//         document.querySelectorAll('.card__wrapper')[i].classList.toggle('rotate');
-//       }
-//     });
-//   });
-// }
-
-
-// cardsRotate();
+request();

@@ -167,9 +167,6 @@ body {
 .card:hover .card__wrapper {
     transform: rotateY(180deg);
 }
-/* .rotate {
-    transform: rotateY(180deg);
-} */
 .card__front,
 .card__back {
     position: absolute;
@@ -186,15 +183,8 @@ body {
     align-items: center;
     justify-content: center;
 }
-.card__front {
-    z-index: 2;
-
-}
 .card__back {
     transform: rotateY(180deg);
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
     text-align: center;
     padding: 0.5rem;
 }
