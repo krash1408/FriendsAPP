@@ -3,9 +3,9 @@ const URL = 'https://randomuser.me/api/?results=50&inc=gender,name,email,registe
 let FIELDWRAPPER = document.createElement('div');
 FIELDWRAPPER.classList.add('main-field__wrapper');
 FIELDWRAPPER.innerHTML = '';
-let usersCurrentArr = [],
-    usersSortedArr = [],
-    genderSortedArray = [];
+let usersCurrentArr = new Array,
+    usersSortedArr = new Array,
+    genderSortedArray = new Array;
 const restoreSortedArray = function () {
   usersSortedArr = [];
   usersCurrentArr.forEach( val => {
@@ -41,6 +41,7 @@ class createCard {
     card.classList.add('card');
     card.appendChild(this.Wrapper());
     this.element = card;
+    this.Rotate();
   }
   Wrapper() {
     const cardWrapper = document.createElement('div');
@@ -83,8 +84,13 @@ class createCard {
     cardPhone.classList.add('card__phont');
     cardPhone.innerHTML = `Phone number:<br>${this.value.phone}`;
     cardBack.append(cardBirthDay, cardEmail, cardID, cardPhone);
-
+  
     return cardBack;
+  }
+  Rotate() {
+    this.element.addEventListener('click', function () {
+      this.firstChild.classList.toggle('card__wrapper--rotated');
+    })
   }
 }
 const createField = function( array ) {
@@ -171,4 +177,5 @@ document.querySelector('.main-navigation').addEventListener('click', () => {
 document.querySelector('#search').addEventListener('input', () => {
   search( usersCurrentArr );
 })
+
 request();
