@@ -23,7 +23,7 @@ body {
 .main {
     width: 100%;
 }
-/* навигация */
+/* navigation */
 .main-navigation {
     display: flex;
     flex-flow: row nowrap;
@@ -58,8 +58,7 @@ body {
     color: rgba(65, 166, 255, 0.856);
     cursor: pointer;
 }
-
-/* поле сортировки */
+/* sorting field */
 .sort {
     width: 5rem;
     min-width: 5rem;
@@ -126,9 +125,7 @@ body {
     color: rgba(65, 166, 255, 0.856);
     text-shadow: 0 0 .5rem rgba(0, 68, 255, 0.788);
 }
-
-
-/* контент */
+/* content */
 .main-field {
     width: 100%;
 }
@@ -143,7 +140,7 @@ body {
 .main-menu {
     display: none;
 }
-/* карточки */
+/* cards */
 .card {
     position: relative;
     min-width: 15rem;
@@ -225,7 +222,7 @@ body {
     white-space: pre-wrap;
     width: 90%;
 }
-/* футер */
+/* footer */
 .main-footer {
     grid-area: f;
     background-color: rgba(65, 166, 255, 0.856);
