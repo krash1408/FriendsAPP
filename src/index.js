@@ -11,7 +11,6 @@ const restoreSortedArray = function () {
   usersCurrentArr.forEach( val => {
     usersSortedArr.push(val);
   })
-  
 }
 const request = function() {
   fetch(URL)
@@ -41,7 +40,6 @@ class createCard {
     card.classList.add('card');
     card.appendChild(this.Wrapper());
     this.element = card;
-    this.Rotate();
   }
   Wrapper() {
     const cardWrapper = document.createElement('div');
@@ -87,18 +85,14 @@ class createCard {
   
     return cardBack;
   }
-  Rotate() {
-    this.element.addEventListener('click', function () {
-      this.firstChild.classList.toggle('card__wrapper--rotated');
-    })
-  }
 }
 const createField = function( array ) {
   const removeField = function(  ) {
     document.querySelectorAll('.card').forEach(() => FIELDWRAPPER.removeChild(FIELDWRAPPER.firstElementChild))
-}
+  }
   removeField();
-  array.forEach(value => FIELDWRAPPER.append(value.element))
+  array.forEach(value => FIELDWRAPPER.append(value.element));
+
   FIELD.append(FIELDWRAPPER);
 }
 const sortByAge = function( a, b ) {
@@ -132,7 +126,6 @@ const search = function() {
       document.querySelectorAll('.card')[i].style.display = "none";
     }
   }
-
 }
 document.querySelector('.main-navigation').addEventListener('click', () => {
   const inputNodeList = document.querySelectorAll('.hidden'); 
@@ -176,6 +169,9 @@ document.querySelector('.main-navigation').addEventListener('click', () => {
 })
 document.querySelector('#search').addEventListener('input', () => {
   search( usersCurrentArr );
+})
+FIELDWRAPPER.addEventListener('click', function () {
+  event.target.closest('.card__wrapper').classList.toggle('card__wrapper--rotated');
 })
 
 request();

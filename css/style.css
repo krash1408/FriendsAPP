@@ -161,7 +161,7 @@ body {
     transform: rotateY(0deg);
     transform-style: preserve-3d;
 }
-.card:hover .card__wrapper {
+.card__wrapper--rotated {
     transform: rotateY(180deg);
 }
 .card__front,
